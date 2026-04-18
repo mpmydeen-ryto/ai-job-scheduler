@@ -27,3 +27,22 @@ if uploaded_file:
 
     st.subheader("FCFS Scheduling Output")
     st.write(df)
+import matplotlib.pyplot as plt
+
+st.subheader("Gantt Chart")
+
+start_time = 0
+fig, ax = plt.subplots()
+
+for i in range(len(df)):
+    burst = df.iloc[i]["burst_time"]
+    ax.barh(0, burst, left=start_time)
+    ax.text(start_time + burst/2, 0, f"Job {df.iloc[i]['job_id']}", 
+            ha='center', va='center', color='white')
+    start_time += burst
+
+ax.set_xlabel("Time")
+ax.set_yticks([])
+ax.set_title("FCFS Gantt Chart")
+
+st.pyplot(fig)
